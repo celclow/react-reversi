@@ -11,6 +11,8 @@
 		"editor.formatOnType": true,
 		"files.associations": {
 			"*.js": "javascriptreact"
-		}
+		},
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
 	}
 }
