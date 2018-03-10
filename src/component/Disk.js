@@ -2,21 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Disk extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            diskState: 'o'
-        }
+    this.state = {
+      diskState: 'o'
     }
+  }
 
-    render() {
-        return (
-            <div className="disk">
-                {this.state.diskState}
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="disk">
+        {this.state.diskState}
+      </div>
+    );
+  }
 }
 
 
