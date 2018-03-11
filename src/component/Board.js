@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Disk from './Disk';
+import { reversiLogic, toBoardIndex } from '../logic/reversiLogic';
 
-const EnumDisk = {
+export const EnumDisk = {
   Empty: {
-    value: ''
+    value: '-'
   },
   Black: {
     value: 'x'
@@ -22,8 +23,13 @@ export default class Board extends React.Component {
     /** ボードサイズ */
     this.BOARD_SIZE = 8;
 
+    let initBoardState = Array(this.BOARD_SIZE * this.BOARD_SIZE).fill(EnumDisk.Empty);
+    initBoardState[toBoardIndex(3, 3)] = EnumDisk.White;
+    initBoardState[toBoardIndex(3, 4)] = EnumDisk.Black;
+    initBoardState[toBoardIndex(4, 3)] = EnumDisk.Black;
+    initBoardState[toBoardIndex(4, 4)] = EnumDisk.White;
     this.state = {
-      boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill(EnumDisk.Empty)
+      boardState: initBoardState
     };
 
     // イベントバインド
@@ -32,10 +38,10 @@ export default class Board extends React.Component {
   }
 
   onClick(e, row, col) {
-    console.log(EnumDisk);
+    //console.log(EnumDisk);
     this.setState(
       {
-        boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill(EnumDisk.White)
+        boardState: reversiLogic(this.state.boardState, row, col)
       });
     //console.log(this.state);
     //console.log(row, col);
