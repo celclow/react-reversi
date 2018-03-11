@@ -8,7 +8,7 @@ class Disk extends React.Component {
 
   render() {
     return (
-      <div className="disk" onClick={this.props.onClick}>
+      <div className="disk" onClick={e => this.props.onClick(e, this.props.row, this.props.col)}>
         {this.props.value}
       </div >
     );

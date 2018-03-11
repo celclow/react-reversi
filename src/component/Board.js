@@ -12,7 +12,7 @@ class Board extends React.Component {
     this.BOARD_SIZE = 8;
 
     this.state = {
-      boardState: Array(this.BOARD_SIZE).fill('o')
+      boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill('o')
     };
 
     // イベントバインド
@@ -20,9 +20,10 @@ class Board extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick(e) {
-    this.setState({ boardState: Array(this.BOARD_SIZE).fill('x') });
+  onClick(e, row, col) {
+    this.setState({ boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill('x') });
     console.log(this.state);
+    console.log(row, col);
   }
 
   render() {
@@ -30,7 +31,13 @@ class Board extends React.Component {
       <div className="board">
         {
           this.state.boardState.map((val, i) => {
-            return <Disk key={i} onClick={this.onClick} value={val} />
+            return <Disk
+              key={i}
+              col={i % this.BOARD_SIZE}
+              row={parseInt(i / this.BOARD_SIZE)}
+              onClick={this.onClick}
+              value={val}
+            />
           })
         }
       </div>
