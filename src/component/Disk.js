@@ -4,17 +4,13 @@ import ReactDOM from 'react-dom';
 class Disk extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      diskState: 'o'
-    }
   }
 
   render() {
     return (
-      <div className="disk">
-        {this.state.diskState}
-      </div>
+      <div className="disk" onClick={this.props.onClick}>
+        {this.props.value}
+      </div >
     );
   }
 }

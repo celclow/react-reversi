@@ -7,20 +7,30 @@ class Board extends React.Component {
 
   constructor(props) {
     super(props);
+
+    /** ボードサイズ */
+    this.BOARD_SIZE = 8;
+
+    this.state = {
+      boardState: Array(this.BOARD_SIZE).fill('o')
+    };
+
+    // イベントバインド
+    /** クリック時のイベント */
+    this.onClick = this.onClick.bind(this);
   }
 
-  static getBoardSize() {
-    return 8;
+  onClick(e) {
+    this.setState({ boardState: Array(this.BOARD_SIZE).fill('x') });
+    console.log(this.state);
   }
 
   render() {
     return (
       <div className="board">
         {
-          [...Array(Board.getBoardSize()).keys()].map(rownum => {
-            return [...Array(Board.getBoardSize()).keys()].map(colnum => {
-              return <Disk row={rownum} col={colnum} />
-            })
+          this.state.boardState.map((val, i) => {
+            return <Disk key={i} onClick={this.onClick} value={val} />
           })
         }
       </div>
