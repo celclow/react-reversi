@@ -1,4 +1,4 @@
-import { EnumDisk } from '../component/Board';
+import { EnumDisk } from '../enum/EnumDisk';
 import config from '../config.json';
 
 export function reversiLogic(boardState, row, col) {

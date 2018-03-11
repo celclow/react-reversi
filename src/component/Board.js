@@ -3,18 +3,7 @@ import ReactDOM from 'react-dom';
 import Disk from './Disk';
 import { reversiLogic, toBoardIndex } from '../logic/reversiLogic';
 import config from '../config.json';
-
-export const EnumDisk = {
-  Empty: {
-    value: '-'
-  },
-  Black: {
-    value: 'x'
-  },
-  White: {
-    value: 'o'
-  }
-}
+import { EnumDisk } from '../enum/EnumDisk';
 
 export default class Board extends React.Component {
 
