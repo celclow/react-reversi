@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Disk from './Disk';
 import { reversiLogic, toBoardIndex } from '../logic/reversiLogic';
+import config from '../config.json';
 
 export const EnumDisk = {
   Empty: {
@@ -20,10 +21,7 @@ export default class Board extends React.Component {
   constructor(props) {
     super(props);
 
-    /** ボードサイズ */
-    this.BOARD_SIZE = 8;
-
-    let initBoardState = Array(this.BOARD_SIZE * this.BOARD_SIZE).fill(EnumDisk.Empty);
+    let initBoardState = Array(config['board.size'] * config['board.size']).fill(EnumDisk.Empty);
     initBoardState[toBoardIndex(3, 3)] = EnumDisk.White;
     initBoardState[toBoardIndex(3, 4)] = EnumDisk.Black;
     initBoardState[toBoardIndex(4, 3)] = EnumDisk.Black;
@@ -54,8 +52,8 @@ export default class Board extends React.Component {
           this.state.boardState.map((val, i) => {
             return <Disk
               key={i}
-              col={i % this.BOARD_SIZE}
-              row={parseInt(i / this.BOARD_SIZE)}
+              col={i % config['board.size']}
+              row={parseInt(i / config['board.size'])}
               onClick={this.onClick}
               value={val}
             />

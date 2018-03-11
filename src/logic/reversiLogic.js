@@ -1,4 +1,5 @@
 import { EnumDisk } from '../component/Board';
+import config from '../config.json';
 
 export function reversiLogic(boardState, row, col) {
 
@@ -8,5 +9,5 @@ export function reversiLogic(boardState, row, col) {
 }
 
 export function toBoardIndex(row, col) {
-  return row * 8 + col;
+  return row * config['board.size'] + col;
 }
