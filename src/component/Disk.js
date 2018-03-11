@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-class Disk extends React.Component {
+export default class Disk extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -9,11 +9,8 @@ class Disk extends React.Component {
   render() {
     return (
       <div className="disk" onClick={e => this.props.onClick(e, this.props.row, this.props.col)}>
-        {this.props.value}
+        {this.props.value.value}
       </div >
     );
   }
 }
-
-
-export default Disk;

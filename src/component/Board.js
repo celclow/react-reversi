@@ -2,8 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Disk from './Disk';
 
-class Board extends React.Component {
+const EnumDisk = {
+  Empty: {
+    value: ''
+  },
+  Black: {
+    value: 'x'
+  },
+  White: {
+    value: 'o'
+  }
+}
 
+export default class Board extends React.Component {
 
   constructor(props) {
     super(props);
@@ -12,7 +23,7 @@ class Board extends React.Component {
     this.BOARD_SIZE = 8;
 
     this.state = {
-      boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill('o')
+      boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill(EnumDisk.Empty)
     };
 
     // イベントバインド
@@ -21,9 +32,13 @@ class Board extends React.Component {
   }
 
   onClick(e, row, col) {
-    this.setState({ boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill('x') });
-    console.log(this.state);
-    console.log(row, col);
+    console.log(EnumDisk);
+    this.setState(
+      {
+        boardState: Array(this.BOARD_SIZE * this.BOARD_SIZE).fill(EnumDisk.White)
+      });
+    //console.log(this.state);
+    //console.log(row, col);
   }
 
   render() {
@@ -45,4 +60,3 @@ class Board extends React.Component {
   }
 }
 
-export default Board;
