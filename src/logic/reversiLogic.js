@@ -25,137 +25,40 @@ function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
   /** 自分の石の色 */
   let myEnumDisk = putEnumDisk;
   /** 相手の石の色 */
-  let yourEnumDisk = yourTurn(putEnumDisk);
+  let yourEnumDisk = getYourEnumDisk(putEnumDisk);
 
-  // check →
-  {
-    let row = putRow;
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let col = putCol + 1; col < config['board.size']; col++) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
-  }
 
-  // check ←
-  {
-    let row = putRow;
+  // 裏返し処理
+  let hogehoge = function (nextBoardState, myEnumDisk, putRow, putCol, rowDirection, colDirection) {
     let isDiffNext = false;
     let tempBoardState = Object.assign([], nextBoardState);
-    for (let col = putCol - 1; col < config['board.size']; col--) {
+    for (
+      let row = putRow + rowDirection, col = putCol + colDirection;
+      0 <= row && row < config['board.size'], 0 <= col && col < config['board.size'];
+      row = row + rowDirection, col = col + colDirection
+    ) {
       if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
         nextBoardState = Object.assign([], tempBoardState);
         break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
+      } else if (tempBoardState[toBoardIndex(row, col)] === getYourEnumDisk(myEnumDisk)) {
         tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
       } else {
         break;
       }
     }
-  }
-  // check ↓
-  {
-    let col = putCol;
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let row = putRow + 1; row < config['board.size']; row++) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
-  }
-  // check ↑
-  {
-    let col = putCol;
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let row = putRow - 1; row < config['board.size']; row--) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
-  }
-  // check ↘
-  {
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let row = putRow + 1, col = putCol + 1; row < config['board.size'], col < config['board.size']; row++ , col++) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
-  }
 
-  // check ↖
-  {
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let row = putRow - 1, col = putCol - 1; row < config['board.size'], col < config['board.size']; row-- , col--) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
+    return nextBoardState;
   }
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, -1, 0);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 1, 0);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 0, -1);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 0, 1);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, -1, -1);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 1, 1);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, -1, 1);
+  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 1, -1);
 
-  // check ↗
-  {
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let row = putRow - 1, col = putCol + 1; row < config['board.size'], col < config['board.size']; row-- , col++) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
-  }
-
-  // check ↙
-  {
-    let isDiffNext = false;
-    let tempBoardState = Object.assign([], nextBoardState);
-    for (let row = putRow + 1, col = putCol - 1; row < config['board.size'], col < config['board.size']; row++ , col--) {
-      if (tempBoardState[toBoardIndex(row, col)] === myEnumDisk) {
-        nextBoardState = Object.assign([], tempBoardState);
-        break;
-      } else if (tempBoardState[toBoardIndex(row, col)] === yourEnumDisk) {
-        tempBoardState[toBoardIndex(row, col)] = myEnumDisk;
-      } else {
-        break;
-      }
-    }
-  }
-
+  // 自分の石を置く。
   if (!equalsBoardState(boardState, nextBoardState)) {
     nextBoardState[toBoardIndex(putRow, putCol)] = myEnumDisk;
   }
@@ -175,21 +78,23 @@ function equalsBoardState(aBoard, bBoard) {
   return true;
 }
 
-function yourTurn(myEnumDisk) {
+function getYourEnumDisk(myEnumDisk) {
   return myEnumDisk === EnumDisk.Black ? EnumDisk.White : EnumDisk.Black;
 }
 
 export function nextTurn(boardState, putEnumDisk, putRow, putCol) {
 
+  putEnumDisk = getYourEnumDisk(putEnumDisk);
+
   for (let row = 0; row < config['board.size']; row++) {
     for (let col = 0; col < config['board.size']; col++) {
-      if (canPut(boardState, putEnumDisk, putRow, putCol)) {
-        return yourTurn(putEnumDisk);
+      if (canPut(boardState, putEnumDisk, row, col)) {
+        return putEnumDisk;
       }
     }
   }
 
-  return putEnumDisk
+  return getYourEnumDisk(putEnumDisk);
 }
 
 export function canPut(boardState, putEnumDisk, putRow, putCol) {
@@ -201,3 +106,4 @@ export function canPut(boardState, putEnumDisk, putRow, putCol) {
 
   return true;
 }
+

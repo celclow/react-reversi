@@ -29,10 +29,11 @@ export default class Board extends React.Component {
     //console.log(EnumDisk);
 
     if (canPut(this.state.boardState, this.state.nowTurn, row, col)) {
+      let tempBoardState = reversiLogic(this.state.boardState, this.state.nowTurn, row, col);
       this.setState(
         {
-          boardState: reversiLogic(this.state.boardState, this.state.nowTurn, row, col),
-          nowTurn: nextTurn(this.state.boardState, this.state.nowTurn, row, col)
+          boardState: tempBoardState,
+          nowTurn: nextTurn(tempBoardState, this.state.nowTurn)
         });
     }
     //console.log(this.state);
