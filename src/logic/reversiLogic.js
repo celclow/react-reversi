@@ -1,11 +1,11 @@
 import { EnumDisk } from '../enum/EnumDisk';
 import config from '../config.json';
 
-export function reversiLogic(boardState, row, col) {
+export function reversiLogic(boardState, putEnumDisk, row, col) {
 
   //boardState[toBoardIndex(row, col)] = EnumDisk.Black;
 
-  return getNextBoardState(boardState, EnumDisk.White, row, col);
+  return getNextBoardState(boardState, putEnumDisk, row, col);
 }
 
 export function toBoardIndex(row, col) {
@@ -25,7 +25,7 @@ function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
   /** 自分の石の色 */
   let myEnumDisk = putEnumDisk;
   /** 相手の石の色 */
-  let yourEnumDisk = putEnumDisk === EnumDisk.Black ? EnumDisk.White : EnumDisk.Black;
+  let yourEnumDisk = yourTurn(putEnumDisk);
 
   // check →
   {
@@ -156,7 +156,7 @@ function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
     }
   }
 
-  if (equalsBoardState(boardState, nextBoardState)) {
+  if (!equalsBoardState(boardState, nextBoardState)) {
     nextBoardState[toBoardIndex(putRow, putCol)] = myEnumDisk;
   }
 
@@ -167,10 +167,37 @@ function equalsBoardState(aBoard, bBoard) {
   for (let row = 0; row < config['board.size']; row++) {
     for (let col = 0; col < config['board.size']; col++) {
       if (aBoard[toBoardIndex(row, col)] !== bBoard[toBoardIndex(row, col)]) {
-        return true;
+        return false;
       }
     }
   }
 
-  return false;
+  return true;
+}
+
+function yourTurn(myEnumDisk) {
+  return myEnumDisk === EnumDisk.Black ? EnumDisk.White : EnumDisk.Black;
+}
+
+export function nextTurn(boardState, putEnumDisk, putRow, putCol) {
+
+  for (let row = 0; row < config['board.size']; row++) {
+    for (let col = 0; col < config['board.size']; col++) {
+      if (canPut(boardState, putEnumDisk, putRow, putCol)) {
+        return yourTurn(putEnumDisk);
+      }
+    }
+  }
+
+  return putEnumDisk
+}
+
+export function canPut(boardState, putEnumDisk, putRow, putCol) {
+  let nextBoardState = getNextBoardState(boardState, putEnumDisk, putRow, putCol);
+
+  if (equalsBoardState(boardState, nextBoardState)) {
+    return false;
+  }
+
+  return true;
 }

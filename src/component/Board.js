@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Disk from './Disk';
-import { reversiLogic, toBoardIndex } from '../logic/reversiLogic';
+import { reversiLogic, toBoardIndex, nextTurn, canPut } from '../logic/reversiLogic';
 import config from '../config.json';
 import { EnumDisk } from '../enum/EnumDisk';
 
@@ -16,7 +16,8 @@ export default class Board extends React.Component {
     initBoardState[toBoardIndex(4, 3)] = EnumDisk.Black;
     initBoardState[toBoardIndex(4, 4)] = EnumDisk.White;
     this.state = {
-      boardState: initBoardState
+      boardState: initBoardState,
+      nowTurn: EnumDisk.Black
     };
 
     // イベントバインド
@@ -26,28 +27,37 @@ export default class Board extends React.Component {
 
   onClick(e, row, col) {
     //console.log(EnumDisk);
-    this.setState(
-      {
-        boardState: reversiLogic(this.state.boardState, row, col)
-      });
+
+    if (canPut(this.state.boardState, this.state.nowTurn, row, col)) {
+      this.setState(
+        {
+          boardState: reversiLogic(this.state.boardState, this.state.nowTurn, row, col),
+          nowTurn: nextTurn(this.state.boardState, this.state.nowTurn, row, col)
+        });
+    }
     //console.log(this.state);
     //console.log(row, col);
   }
 
   render() {
     return (
-      <div className="board">
-        {
-          this.state.boardState.map((val, i) => {
-            return <Disk
-              key={i}
-              col={i % config['board.size']}
-              row={parseInt(i / config['board.size'])}
-              onClick={this.onClick}
-              value={val}
-            />
-          })
-        }
+      <div>
+        <div className="board">
+          {
+            this.state.boardState.map((val, i) => {
+              return <Disk
+                key={i}
+                col={i % config['board.size']}
+                row={parseInt(i / config['board.size'])}
+                onClick={this.onClick}
+                value={val}
+              />
+            })
+          }
+        </div>
+        <div>
+          {this.state.nowTurn.value}
+        </div>
       </div>
     );
   }
