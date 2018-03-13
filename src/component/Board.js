@@ -17,7 +17,7 @@ export default class Board extends React.Component {
     initBoardState[toBoardIndex(4, 4)] = DiskType.White;
     this.state = {
       boardState: initBoardState,
-      nowTurn: DiskType.Black
+      nowDiskType: DiskType.Black
     };
 
     // イベントバインド
@@ -28,12 +28,12 @@ export default class Board extends React.Component {
   onClick(e, row, col) {
     //console.log(DiskType);
 
-    if (canPut(this.state.boardState, this.state.nowTurn, row, col)) {
-      let tempBoardState = reversiLogic(this.state.boardState, this.state.nowTurn, row, col);
+    if (canPut(this.state.boardState, this.state.nowDiskType, row, col)) {
+      let tempBoardState = reversiLogic(this.state.boardState, this.state.nowDiskType, row, col);
       this.setState(
         {
           boardState: tempBoardState,
-          nowTurn: nextDiskType(tempBoardState, this.state.nowTurn)
+          nowDiskType: nextDiskType(tempBoardState, this.state.nowDiskType)
         });
     }
     //console.log(this.state);
@@ -57,7 +57,7 @@ export default class Board extends React.Component {
           }
         </div>
         <div>
-          {this.state.nowTurn.value}
+          {this.state.nowDiskType.value}
         </div>
       </div>
     );
