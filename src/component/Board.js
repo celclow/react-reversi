@@ -51,7 +51,7 @@ export default class Board extends React.Component {
                 col={i % config['board.size']}
                 row={parseInt(i / config['board.size'])}
                 onClick={this.onClick}
-                value={val}
+                diskType={val}
               />
             })
           }
