@@ -85,7 +85,7 @@ function getYourDiskType(myDiskType) {
 }
 
 /** 次の相手の石の色を取得 */
-export function nextTurn(boardState, putDiskType, putRow, putCol) {
+export function nextDiskType(boardState, putDiskType, putRow, putCol) {
 
   putDiskType = getYourDiskType(putDiskType);
 

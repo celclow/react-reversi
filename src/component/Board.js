@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Disk from './Disk';
-import { reversiLogic, toBoardIndex, nextTurn, canPut } from '../logic/reversiLogic';
+import { reversiLogic, toBoardIndex, nextDiskType, canPut } from '../logic/reversiLogic';
 import config from '../config.json';
 import { DiskType } from '../enum/DiskType';
 
@@ -33,7 +33,7 @@ export default class Board extends React.Component {
       this.setState(
         {
           boardState: tempBoardState,
-          nowTurn: nextTurn(tempBoardState, this.state.nowTurn)
+          nowTurn: nextDiskType(tempBoardState, this.state.nowTurn)
         });
     }
     //console.log(this.state);
