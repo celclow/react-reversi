@@ -1,17 +1,17 @@
 import { EnumDisk } from '../enum/EnumDisk';
 import config from '../config.json';
 
-export function reversiLogic(boardState, putEnumDisk, row, col) {
-
-  //boardState[toBoardIndex(row, col)] = EnumDisk.Black;
-
-  return getNextBoardState(boardState, putEnumDisk, row, col);
+/** リバーシロジック */
+export function reversiLogic(boardState, putEnumDisk, putRow, putCol) {
+  return getNextBoardState(boardState, putEnumDisk, putRow, putCol);
 }
 
+//** 座標をindexへ変換 */
 export function toBoardIndex(row, col) {
   return row * config['board.size'] + col;
 }
 
+/** 次の盤面を取得 */
 function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
 
   // EMPTY以外はfalse
@@ -29,7 +29,7 @@ function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
 
 
   // 裏返し処理
-  let hogehoge = function (nextBoardState, myEnumDisk, putRow, putCol, rowDirection, colDirection) {
+  let reverseProc = function (nextBoardState, myEnumDisk, putRow, putCol, rowDirection, colDirection) {
     let isDiffNext = false;
     let tempBoardState = Object.assign([], nextBoardState);
     for (
@@ -49,14 +49,14 @@ function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
 
     return nextBoardState;
   }
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, -1, 0);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 1, 0);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 0, -1);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 0, 1);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, -1, -1);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 1, 1);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, -1, 1);
-  nextBoardState = hogehoge(nextBoardState, myEnumDisk, putRow, putCol, 1, -1);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, -1, 0);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, 1, 0);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, 0, -1);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, 0, 1);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, -1, -1);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, 1, 1);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, -1, 1);
+  nextBoardState = reverseProc(nextBoardState, myEnumDisk, putRow, putCol, 1, -1);
 
   // 自分の石を置く。
   if (!equalsBoardState(boardState, nextBoardState)) {
@@ -66,6 +66,7 @@ function getNextBoardState(boardState, putEnumDisk, putRow, putCol) {
   return nextBoardState;
 }
 
+/** 盤面の比較 */
 function equalsBoardState(aBoard, bBoard) {
   for (let row = 0; row < config['board.size']; row++) {
     for (let col = 0; col < config['board.size']; col++) {
@@ -78,10 +79,12 @@ function equalsBoardState(aBoard, bBoard) {
   return true;
 }
 
+/** 相手の石の色を取得 */
 function getYourEnumDisk(myEnumDisk) {
   return myEnumDisk === EnumDisk.Black ? EnumDisk.White : EnumDisk.Black;
 }
 
+/** 次の相手の石の色を取得 */
 export function nextTurn(boardState, putEnumDisk, putRow, putCol) {
 
   putEnumDisk = getYourEnumDisk(putEnumDisk);
@@ -97,6 +100,7 @@ export function nextTurn(boardState, putEnumDisk, putRow, putCol) {
   return getYourEnumDisk(putEnumDisk);
 }
 
+/** 座標に石を置けるかを判定 */
 export function canPut(boardState, putEnumDisk, putRow, putCol) {
   let nextBoardState = getNextBoardState(boardState, putEnumDisk, putRow, putCol);
 
