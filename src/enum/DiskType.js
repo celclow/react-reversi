@@ -1,4 +1,4 @@
-export const EnumDisk = {
+export const DiskType = {
   Empty: {
     value: '-'
   },

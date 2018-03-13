@@ -3,21 +3,21 @@ import ReactDOM from 'react-dom';
 import Disk from './Disk';
 import { reversiLogic, toBoardIndex, nextTurn, canPut } from '../logic/reversiLogic';
 import config from '../config.json';
-import { EnumDisk } from '../enum/EnumDisk';
+import { DiskType } from '../enum/DiskType';
 
 export default class Board extends React.Component {
 
   constructor(props) {
     super(props);
 
-    let initBoardState = Array(config['board.size'] * config['board.size']).fill(EnumDisk.Empty);
-    initBoardState[toBoardIndex(3, 3)] = EnumDisk.White;
-    initBoardState[toBoardIndex(3, 4)] = EnumDisk.Black;
-    initBoardState[toBoardIndex(4, 3)] = EnumDisk.Black;
-    initBoardState[toBoardIndex(4, 4)] = EnumDisk.White;
+    let initBoardState = Array(config['board.size'] * config['board.size']).fill(DiskType.Empty);
+    initBoardState[toBoardIndex(3, 3)] = DiskType.White;
+    initBoardState[toBoardIndex(3, 4)] = DiskType.Black;
+    initBoardState[toBoardIndex(4, 3)] = DiskType.Black;
+    initBoardState[toBoardIndex(4, 4)] = DiskType.White;
     this.state = {
       boardState: initBoardState,
-      nowTurn: EnumDisk.Black
+      nowTurn: DiskType.Black
     };
 
     // イベントバインド
@@ -26,7 +26,7 @@ export default class Board extends React.Component {
   }
 
   onClick(e, row, col) {
-    //console.log(EnumDisk);
+    //console.log(DiskType);
 
     if (canPut(this.state.boardState, this.state.nowTurn, row, col)) {
       let tempBoardState = reversiLogic(this.state.boardState, this.state.nowTurn, row, col);
